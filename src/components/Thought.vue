@@ -18,11 +18,11 @@ Vue.directive('think', {
   //   console.log('Thinking element bound', el);
   // },
   inserted(el) {
-    console.log('Thinking element inserted', el, el.dataset);
+    // console.log('Thinking element inserted', el, el.dataset);
     bus.$emit('thinking-about', el, el.dataset.thinkAbout, el.dataset.thinkWithParams, el.dataset.thinkRemember);
   },
   update(el) {
-    console.log('Thinking element updated', el, el.dataset);
+    // console.log('Thinking element updated', el, el.dataset);
     bus.$emit('thinking-about', el, el.dataset.thinkAbout, el.dataset.thinkWithParams, el.dataset.thinkRemember);
   },
   // componentUpdated(el) {
@@ -32,6 +32,10 @@ Vue.directive('think', {
   //   console.log('Thinking element unbound', el);
   // },
 });
+
+const jsonPromises = {};
+
+const fetchPromises = {};
 
 export default {
   name: 'thought',
@@ -43,11 +47,16 @@ export default {
   created() {
     bus.$on('thinking-about', (el, about, withParams, remember) => {
       const elToUpdate = el;
-      console.log('An element wants to think about', about, withParams, remember);
-      fetch(`${this.url}&${withParams}`).then((res) => {
-        res.json().then((memory) => {
-          console.log('Remembered', jsonQuery(remember, { data: memory }));
-          elToUpdate.innerHTML = jsonQuery(remember, { data: memory }).value;
+      const fullURL = `${this.url}&${withParams}`;
+
+      if (!fetchPromises[fullURL]) {
+        fetchPromises[fullURL] = fetch(fullURL);
+      }
+
+      fetchPromises[fullURL].then((res) => {
+        res.clone().json().then((json) => {
+          jsonPromises[fullURL] = json;
+          elToUpdate.innerHTML = jsonQuery(remember, { data: jsonPromises[fullURL] }).value;
         });
       });
     });
