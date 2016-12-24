@@ -6,6 +6,11 @@
 
     <h1 v-think data-think-about="flickr" data-think-with-params="method=flickr.cameras.getBrands" data-think-remember="brands.brand[0].name"></h1>
     <h1 v-think data-think-about="flickr" data-think-with-params="method=flickr.cameras.getBrands" data-think-remember="brands.brand[1].name"></h1>
+    <h1 v-think data-think-about="flickr" data-think-with-params="method=flickr.cameras.getBrands" data-think-remember="brands.brand[2].name"></h1>
+    <h1 v-think data-think-about="flickr" data-think-with-params="method=flickr.cameras.getBrands" data-think-remember="brands.brand[3].name"></h1>
+    <h1 v-think data-think-about="flickr" data-think-with-params="method=flickr.cameras.getBrands" data-think-remember="brands.brand[4].name"></h1>
+
+
     <!-- <h1 v-thought="flickr" v-thought.param="method=flickr.cameras.getBrands" v-memory="brands.brand[0].name"> -->
 
     <!-- Could also be: -->
